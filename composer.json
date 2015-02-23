@@ -1,0 +1,20 @@
+{
+    "name": "tommy001/mymodule",
+    "type": "library",
+    "description": "Class to handle uploading of images within the Anax-MVC framework",
+    "keywords": ["upload", "image upload", "Anax-MVC"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tommy Johansson",
+            "email": "tommy@franskaord.se",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": { "Tommy001\\": "src/" }
+    }
+}
