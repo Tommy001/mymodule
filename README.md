@@ -21,8 +21,8 @@ After the "$" prompt you may want to type the following line:
 
 After this download you may want to open your text editor (like JEdit or other) and open the file *composer.json* in the folder Anax-MVC. Add these lines to the end of that file, just before the final curly brace:
 
->        "require": {
-        "tommy001/mymodule": "devmaster"
+>           "require": {
+        "tommy001/mymodule": "dev-master"
     }
     
 Now use your command line interface and change the directory into Anax-MVC. Type "Composer validate" to check out that your composer.json file is valid. If it checks out, you then type "Composer install --no dev" on the command line.
