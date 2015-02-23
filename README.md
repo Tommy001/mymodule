@@ -7,7 +7,7 @@ This software is free software and carries a MIT license.
 
 #Description and test guide
 
-**mymodule** contains a php class that you can use to upload images within the Anax-MVC framework. Future versions will also allow downloads from secure folders on or above root level using a simple proxy script. In this first version there is no support for downloads and uploaded files are stored in the default folder Anax-MVC/webroot/img (where you will need to create a new writable folder named "upload").
+**mymodule** contains a php class that you can use to upload images within the Anax-MVC framework. Future versions will also allow downloads from secure folders on or above root level using a simple proxy script. In this first version there is no support for downloads and uploaded files are stored in the default folder Anax-MVC/webroot/img (where you will need to create a new writeable folder named "upload").
 
 The uploaded file is passed through a try and catch method where it is checked for errors, invalid parameters, file size defined in the upload form (MAX_FILE_SIZE) and also defined in the script itself. The filename length is limited to 100 characters and only JPG, PNG and GIF images are allowed. If the file pass the "valid upload file" check performed by "move_uploaded_file()" it is stored on disk with a secure filename obtained by the php function *sha1_file()*.
 
@@ -32,7 +32,7 @@ This will download the package **Mymodule** into a folder named "vendor" in Anax
 In the folder Anax-MVC/vendor/Tommy001/mymodule/webroot there is a file named index.php. Copy that file to the folder Anax-MVC/webroot.
 Then copy the files from the folder Anax-MVC/vendor/Tommy001/mymodule/view to a new folder named Anax-MVC/app/view/**mymodule**.
 And finally copy the files from the folder Anax-MVC/vendor/Tommy001/mymodule/src to a new folder named Anax-MVC/app/src/**Mymodule**.
-As mentioned above you will also need to create a writable folder named Anax-MVC/webroot/img/upload.
+As mentioned above you will also need to create a writeable folder named Anax-MVC/webroot/img/upload.
 
 In order for simple testing of the upload class there is a rudimentary database connection in the Upload class constructor. You also need a MySQL database table to test the script. Create it with the SQL query below using e.g. phpMyAdmin. 
 
