@@ -25,7 +25,7 @@ After this download you may want to open your text editor (like JEdit or other) 
         "tommy001/mymodule": "dev-master"
     }
     
-Now use your command line interface and change the directory into Anax-MVC. Type "Composer validate" to check out that your composer.json file is valid. If it checks out, you then type "Composer install --no dev" on the command line.
+Now use your command line interface and change the directory into Anax-MVC. Type "Composer validate" to check out that your composer.json file is valid. If it checks out, you then type "Composer install" on the command line.
 
 This will download the package **Mymodule** into a folder named "vendor" in Anax-MVC.
     
