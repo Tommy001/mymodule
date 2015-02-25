@@ -1,2 +1,9 @@
-filter:
-    excluded_paths: [vendor/*]
+--- 
+filter: 
+  excluded_paths: 
+    - test/*
+    - vendor/*
+imports: 
+  - php
+tools: 
+  external_code_coverage: true

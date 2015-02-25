@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\Mymodule;
+namespace Tommy001\Mymodule;
 
 /**
  * Class for checking and processing uploaded gif, png and jpg images
@@ -22,6 +22,30 @@ class UploadController implements \Anax\DI\IInjectionAware {
 
         
     }
+/**
+* Get name from session.
+*
+* @return string
+*
+*/
+public function getNameFromSession()
+{
+if ($this->session->has('name')) {
+return $this->session->get('name');
+} else {
+return "No name is set in session.";
+}
+}
+/**
+* Set name in session.
+*
+* @return void
+*
+*/
+public function setNameInSession($name)
+{
+$this->session->set('name', $name);
+}    
     
     /**
  * Initialize the controller.
