@@ -16,5 +16,8 @@
     },
     "autoload": {
         "psr-4": { "Tommy001\\": "src/" }
-    }
+    },
+    "require": {
+    "anax/mvc": "dev-master"
+}
 }
