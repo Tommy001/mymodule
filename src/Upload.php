@@ -17,7 +17,7 @@ class Upload implements \Anax\DI\IInjectionAware
     
     public function __construct(){
         
-        $dsn      = 'mysql:host=localhost;dbname=mydb;';
+        $dsn      = 'mysql:host=localhost;dbname=toja14;';
         $login    = 'root';
         $password = '';
         $options  = array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'");
@@ -39,8 +39,6 @@ class Upload implements \Anax\DI\IInjectionAware
       $lastimg = $stmt->fetchAll(\PDO::FETCH_ASSOC); 
       return $lastimg;
     }  
-
-
 }
 
 

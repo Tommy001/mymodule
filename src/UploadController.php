@@ -130,23 +130,39 @@ class UploadController implements \Anax\DI\IInjectionAware {
         }
         
         /* create an image source with specified dimensions */
-        $destimg=imagecreatetruecolor($new_width,$new_height)
-            or die('Image could not be created');        
+        $destimg=imagecreatetruecolor($new_width,$new_height);
+        if(!$destimg){
+            $this->views->add('mymodule/messages', [
+            'message' => 'Ett fel uppstod vid bildbehandlingen.',
+        ]); 
+        }
 
         /* create an image source from jpg, gif or  png*/
 
         switch ($this->ext) {
-            case 'gif' :
-                $srcimg = imagecreatefromgif($this->imgpath)
-                or die('The source image could not be opened');
+            case 'gif':
+                $srcimg = imagecreatefromgif($this->imgpath);
+                if(!$srcimg){
+                    $this->views->add('mymodule/messages', [
+                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
+                    ]); 
+                }
                 break;
-            case 'jpg' :
-                $srcimg = imagecreatefromjpeg($this->imgpath)
-                or die('The source image could not be opened');
+            case 'jpg':
+                $srcimg = imagecreatefromjpeg($this->imgpath);
+                if(!$srcimg){
+                    $this->views->add('mymodule/messages', [
+                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
+                    ]); 
+                }
                 break;
-            case 'png' :
-                $srcimg = imagecreatefrompng($this->imgpath)
-                or die('The source image could not be opened');
+            case 'png':
+                $srcimg = imagecreatefrompng($this->imgpath);
+                if(!$srcimg){
+                    $this->views->add('mymodule/messages', [
+                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
+                    ]); 
+                }
                 break;
         }
 
@@ -157,23 +173,39 @@ class UploadController implements \Anax\DI\IInjectionAware {
             imagesavealpha($destimg, true); //true makes surre that all alpha channel-info is kept
         }
         /* copy frame from $srcimg to the image in $destimg and resample image to reduce data size  */	
-        imagecopyresampled($destimg,$srcimg,0,0,0,0,$new_width,$new_height,imagesx($srcimg),imagesy($srcimg))
-        or die('Could not create a new image size');
+        $res = imagecopyresampled($destimg,$srcimg,0,0,0,0,$new_width,$new_height,imagesx($srcimg),imagesy($srcimg));
+         if(!$res){
+            $this->views->add('mymodule/messages', [
+                'message' => 'Ett fel uppstod vid bildbehandlingen.',
+            ]); 
+         } 
             
 
         /* output image to file in png, gif or jpg format */
         switch ($this->ext) {
-        case 'gif' :
-            imagegif($destimg,$this->imgpath)
-            or die('Failed to output the gif image');           
+        case 'gif':
+            $res = imagegif($destimg,$this->imgpath);
+             if(!$res){
+                    $this->views->add('mymodule/messages', [
+                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
+                    ]); 
+                }         
             break;
-        case 'jpg' :
-            imagejpeg($destimg,$this->imgpath) 
-            or die('Failed to output the jpg image');
+        case 'jpg':
+            $res = imagejpeg($destimg,$this->imgpath); 
+                if(!$res){
+                    $this->views->add('mymodule/messages', [
+                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
+                    ]); 
+                } 
             break;
-        case 'png' :
-            imagepng($destimg,$this->imgpath)
-            or die('Failed to output the png image');
+        case 'png':
+            $res = imagepng($destimg,$this->imgpath);                
+                if(!$res){
+                    $this->views->add('mymodule/messages', [
+                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
+                    ]); 
+                } 
             break;
         }
         
