@@ -48,6 +48,12 @@ class UploadController implements \Anax\DI\IInjectionAware {
         }
     }
     
+    private function errorMessage(){
+        $this->views->add('mymodule/messages', [
+            'message' => 'Ett fel uppstod vid bildbehandlingen.',
+                    ]);
+    }
+    
     private function checkUpload(){
 
         try {
@@ -143,27 +149,23 @@ class UploadController implements \Anax\DI\IInjectionAware {
             case 'gif':
                 $srcimg = imagecreatefromgif($this->imgpath);
                 if(!$srcimg){
-                    $this->views->add('mymodule/messages', [
-                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
-                    ]); 
+                    $this->errorMessage();
                 }
                 break;
             case 'jpg':
                 $srcimg = imagecreatefromjpeg($this->imgpath);
                 if(!$srcimg){
-                    $this->views->add('mymodule/messages', [
-                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
-                    ]); 
+                    $this->errorMessage(); 
                 }
                 break;
             case 'png':
                 $srcimg = imagecreatefrompng($this->imgpath);
                 if(!$srcimg){
-                    $this->views->add('mymodule/messages', [
-                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
-                    ]); 
+                    $this->errorMessage();
                 }
                 break;
+            default:
+                $srcimg = null;
         }
 
         /* Keep transparency */            
@@ -175,9 +177,7 @@ class UploadController implements \Anax\DI\IInjectionAware {
         /* copy frame from $srcimg to the image in $destimg and resample image to reduce data size  */	
         $res = imagecopyresampled($destimg,$srcimg,0,0,0,0,$new_width,$new_height,imagesx($srcimg),imagesy($srcimg));
          if(!$res){
-            $this->views->add('mymodule/messages', [
-                'message' => 'Ett fel uppstod vid bildbehandlingen.',
-            ]); 
+             $this->errorMessage();
          } 
             
 
@@ -185,26 +185,20 @@ class UploadController implements \Anax\DI\IInjectionAware {
         switch ($this->ext) {
         case 'gif':
             $res = imagegif($destimg,$this->imgpath);
-             if(!$res){
-                    $this->views->add('mymodule/messages', [
-                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
-                    ]); 
-                }         
+                if(!$res){
+                    $this->errorMessage();
+             }         
             break;
         case 'jpg':
             $res = imagejpeg($destimg,$this->imgpath); 
                 if(!$res){
-                    $this->views->add('mymodule/messages', [
-                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
-                    ]); 
+                    $this->errorMessage();
                 } 
             break;
         case 'png':
             $res = imagepng($destimg,$this->imgpath);                
                 if(!$res){
-                    $this->views->add('mymodule/messages', [
-                        'message' => 'Ett fel uppstod vid bildbehandlingen.',
-                    ]); 
+                    $this->errorMessage();
                 } 
             break;
         }
