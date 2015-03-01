@@ -1,5 +1,5 @@
 <?php
-namespace Anax\Mymodule;
+namespace Tommy001\Mymodule;
  
 /**
  * Model for Upload.
@@ -13,28 +13,32 @@ class Upload implements \Anax\DI\IInjectionAware
      * Save to database.
      *
      */
-    private $pdo;     
-    
+    public $pdo;     
+/**
+ * @codeCoverageIgnore
+ */    
     public function __construct(){
         
-        $dsn      = 'mysql:host=localhost;dbname=toja14;';
-        $login    = 'root';
-        $password = '';
-        $options  = array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'");
-        $this->pdo = new \PDO($dsn, $login, $password, $options);
+        //for test purpose, replace with wanted db
+        $this->pdo = new \PDO("sqlite:test_upload.sqlite");
+        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING); // Display errors
 
     }
 
-
+/**
+ * @codeCoverageIgnore
+ */
     public function add($upload) {
         $stmt = $this->pdo->prepare("INSERT INTO test_upload (san_filename, path) VALUES(?, ?)");
         $stmt->execute($upload);
     }
-
+/**
+ * @codeCoverageIgnore
+ */
     public function findLast()
     {
       $id = $this->pdo->lastInsertId();
-      $stmt = $this->pdo->prepare('SELECT * FROM test_upload WHERE id = ?;');
+      $stmt = $this->pdo->prepare('SELECT * FROM test_upload WHERE rowid = ?;');
       $stmt->execute(array($id));
       $lastimg = $stmt->fetchAll(\PDO::FETCH_ASSOC); 
       return $lastimg;

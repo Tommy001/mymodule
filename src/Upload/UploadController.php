@@ -9,75 +9,114 @@ namespace Tommy001\Mymodule;
 class UploadController implements \Anax\DI\IInjectionAware {
     use \Anax\DI\TInjectable;
     
-    private $upload;    
-    private $imgpath;
-    private $ext;
-    private $filename;
+    public $new_height;
+    public $new_width;
+    protected $srcimg;
+    protected $destimg;
+    protected $upload;    
+    protected $imgpath;
+    protected $ext;
+    protected $filename;
+    protected $_destination;
 
     /**
      * Constructor
      *
      */
-    public function __construct() {
-
-        
+    public function __construct($destination=null) {
+        $this->imgpath = $destination;
     }
-/**
-* Get name from session.
-*
-* @return string
-*
-*/
-public function getNameFromSession()
-{
-if ($this->session->has('name')) {
-return $this->session->get('name');
-} else {
-return "No name is set in session.";
-}
-}
-/**
-* Set name in session.
-*
-* @return void
-*
-*/
-public function setNameInSession($name)
-{
-$this->session->set('name', $name);
-}    
+
+    /**
+     * Move file
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function movefile($name) {
+        if(empty($_FILES[$name]) || !is_uploaded_file($_FILES[$name]['tmp_name']))
+        {
+            return FALSE;
+        }
+
+        return move_uploaded_file($_FILES[$name]['tmp_name'], $this->imgpath);
+    }
+    
+    public function checkMimeType(){
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        if (false === $this->ext = array_search(
+            $finfo->file($_FILES['img']['tmp_name']),
+            array(
+                'jpg' => 'image/jpeg',
+                'png' => 'image/png',
+                'gif' => 'image/gif',
+                ),true)){
+            
+                return false;
+                } else {
+                return true;
+            }
+    }
+    
     
     /**
- * Initialize the controller.
- *
- * @return void
+    * Initialize the controller.
+    *
+    * @return void
+    */
+    /**
+ * @codeCoverageIgnore
  */
     public function initialize() {
     
-        $this->upload = new \Anax\Mymodule\Upload();
+        $this->upload = new \Tommy001\Mymodule\Upload();
         $this->upload->setDI($this->di);
-    }
-            
+    }  
     
+/**
+ * @codeCoverageIgnore
+ */    
     public function entryAction() {
 
-        $this->initialize();            
         $res = $this->checkUpload();
-        if($res === true){
-            $this->process(); 
+        if($res === true){    
+            $this->imageSize();
+            $res = $this->createImageSource();
+            if(!$res){
+                $this->errorMessage();
+            }
+            $res = $this->createImage();
+            if(!$res){
+                $this->errorMessage();
+            }
+            $res = $this->transparencyAndResample();
+            if(!$res){
+                $this->errorMessage();
+            } 
+            $res = $this->outputImage();
+            if(!$res){
+                $this->errorMessage();
+            }            
+            $filename = $this->sanitizeFilename();
+            $this->saveToDatabase($filename);
+            $this->viewUpload();
         } else {
            $this->views->add('mymodule/messages', [
            'message' => $res,
         ]);                    
         }
     }
-    
+/**
+ * @codeCoverageIgnore
+ */    
     private function errorMessage(){
         $this->views->add('mymodule/messages', [
             'message' => 'Ett fel uppstod vid bildbehandlingen.',
                     ]);
     }
-    
+/**
+ * @codeCoverageIgnore
+ */    
     private function checkUpload(){
 
         try {
@@ -104,31 +143,22 @@ $this->session->set('name', $name);
             if(mb_strlen($_FILES['img']['name'],"UTF-8") > 100) {
             throw new \Anax\Exception('Filename is too long.');
         }
-            $this->filename = $_FILES['img']['name'];
+
+            if(!$this->checkMimeType())
+
+        {
+            throw new \Anax\Exception('Wrong file type.');
+        } 
         
             if($_FILES['img']['size'] > 2000000) {
             throw new \Anax\Exception('Exceeded filesize limit defined in script.');
         }        
 
-            $finfo = new \finfo(FILEINFO_MIME_TYPE);
-            if (false === $this->ext = array_search(
-                $finfo->file($_FILES['img']['tmp_name']),
-                array(
-                    'jpg' => 'image/jpeg',
-                    'png' => 'image/png',
-                    'gif' => 'image/gif',
-                    ),
-                true
-        )) {
-        throw new \Anax\Exception('Invalid file format. Please make sure to only upload GIF, PNG or JPG images.');
-        }
             $this->imgpath = sprintf('img/upload/%s.%s',
             sha1_file($_FILES['img']['tmp_name']), $this->ext);
-            if(!move_uploaded_file(
-                $_FILES['img']['tmp_name'],
-                $this->imgpath
-            )
-        ) {
+            if(!$this->movefile('img'))
+            
+        {
         throw new \Anax\Exception('Failed to move uploaded file. Check to see that you have a folder named \'img/upload\' in your Anax webroot folder');
         }    
           
@@ -143,102 +173,126 @@ $this->session->set('name', $name);
         }
     }
 
-
-    private function process() {
-        $this->initialize();            
+    public function imageSize() {
 
         $size = 300; // the default image height
         chmod ($this->imgpath, octdec('0666')); // read-write
         $sizes = getimagesize($this->imgpath);
         $aspect_ratio = $sizes[1]/$sizes[0]; 
         if ($sizes[1] <= $size) {
-            $new_width = $sizes[0];
-            $new_height = $sizes[1];
+            $this->new_width = $sizes[0];
+            $this->new_height = $sizes[1];
         } else {
-            $new_height = $size; 
-            $new_width = abs($new_height/$aspect_ratio); 
+            $this->new_height = $size; 
+            $this->new_width = round($this->new_height/$aspect_ratio); 
         }
+    }
         
+    public function createImageSource(){    
         /* create an image source with specified dimensions */
-        $destimg=imagecreatetruecolor($new_width,$new_height);
-        if(!$destimg){
-            $this->views->add('mymodule/messages', [
-            'message' => 'Ett fel uppstod vid bildbehandlingen.',
-        ]); 
+        $this->destimg=imagecreatetruecolor($this->new_width,$this->new_height);
+        if(!$this->destimg){
+            return false;
         }
+        return true;
+    }
 
-        /* create an image source from jpg, gif or  png*/
+    public function createImage(){
 
         switch ($this->ext) {
             case 'gif':
-                $srcimg = imagecreatefromgif($this->imgpath);
-                if(!$srcimg){
-                    $this->errorMessage();
+                $this->srcimg = imagecreatefromgif($this->imgpath);
+                if(!$this->srcimg){
+                    return false;
                 }
+                return true;
                 break;
             case 'jpg':
-                $srcimg = imagecreatefromjpeg($this->imgpath);
-                if(!$srcimg){
-                    $this->errorMessage(); 
+                $this->srcimg = imagecreatefromjpeg($this->imgpath);
+                if(!$this->srcimg){
+                    return false; 
                 }
+                return true;
                 break;
             case 'png':
-                $srcimg = imagecreatefrompng($this->imgpath);
-                if(!$srcimg){
-                    $this->errorMessage();
+                $this->srcimg = imagecreatefrompng($this->imgpath);
+                if(!$this->srcimg){
+                    return false;
                 }
+                return true;
                 break;
             default:
-                $srcimg = null;
+                $this->srcimg = null;
+                return false;
         }
-
-        /* Keep transparency */            
+    }
+    
+    public function transparencyAndResample(){
+        
         if($this->ext == 'png' || $this->ext == 'gif'){
-            imagecolortransparent($destimg, imagecolorallocatealpha($destimg, 0, 0, 0, 0)); // numbers are red, green, blue and last alpha
-            imagealphablending($destimg, false);
-            imagesavealpha($destimg, true); //true makes surre that all alpha channel-info is kept
+            imagecolortransparent($this->destimg, imagecolorallocatealpha($this->destimg, 0, 0, 0, 0)); // numbers are red, green, blue and last alpha
+            imagealphablending($this->destimg, false);
+            imagesavealpha($this->destimg, true); //true makes surre that all alpha channel-info is kept
         }
         /* copy frame from $srcimg to the image in $destimg and resample image to reduce data size  */	
-        $res = imagecopyresampled($destimg,$srcimg,0,0,0,0,$new_width,$new_height,imagesx($srcimg),imagesy($srcimg));
+        $res = imagecopyresampled($this->destimg,$this->srcimg,0,0,0,0,$this->new_width,$this->new_height,imagesx($this->srcimg),imagesy($this->srcimg));
          if(!$res){
-             $this->errorMessage();
+             return false;
          } 
-            
+         return true;
+    }
 
-        /* output image to file in png, gif or jpg format */
+    public function outputImage(){
+
         switch ($this->ext) {
         case 'gif':
-            $res = imagegif($destimg,$this->imgpath);
-                if(!$res){
-                    $this->errorMessage();
-             }         
-            break;
+            $res = imagegif($this->destimg,$this->imgpath);
+            if(!$res){
+                return false;
+            }     
+            return true;
+             break;
         case 'jpg':
-            $res = imagejpeg($destimg,$this->imgpath); 
-                if(!$res){
-                    $this->errorMessage();
-                } 
+            $res = imagejpeg($this->destimg,$this->imgpath); 
+            if(!$res){
+                return false;
+            }
+            return true;
             break;
         case 'png':
-            $res = imagepng($destimg,$this->imgpath);                
-                if(!$res){
-                    $this->errorMessage();
-                } 
+            $res = imagepng($this->destimg,$this->imgpath);                
+            if(!$res){
+                return false;
+            } 
+            return true;    
             break;
         }
+    }
+    
+    public function sanitizeFilename(){
         
         /* in this pattern you can add special characters used in you language and their replacements, otherwise they will just be stripped from the filename */ 
         $filename = preg_replace(array('/å/', '/ä/', '/ö/', '/Å/', '/Ä/', '/Ö/', '/[^a-zA-Z0-9\/_|+ .-]/', '/[ -]+/', '/^-|-$/'),
-        array('a', 'a', 'o', 'a', 'a', 'o', '', '_', ''), strtolower($this->filename));
-        
-        /* the code below is for test purpose, modify or replace it with needed
-        structure to work in you application */        
- 
+        array('a', 'a', 'o', 'a', 'a', 'o', '', '_', ''), mb_strtolower($_FILES['img']['name'], 'UTF-8'));
+        return $filename;
+    }
+/**
+ * @codeCoverageIgnore
+ */        
+    public function saveToDatabase($filename){   
+        $this->initialize();
         $this->upload->add([
             '0' => $filename,
             '1' => $this->imgpath, 
         ]);
-        
+    }
+   
+        /* the code below is for test purpose, modify or replace it with needed
+        structure to work in you application */  
+/**
+ * @codeCoverageIgnore
+ */        
+    public function viewUpload(){
         $lastimage = $this->upload->findLast();
         $url = $this->di->url->asset($this->imgpath);
 
@@ -251,10 +305,6 @@ $this->session->set('name', $name);
         
         $this->views->addString($img_cap, 'main');
 
-        
- 
-        
-  
     }
 }
         

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for C:/Users/Tommy/Documents/Webbutveckling/wamp/www/Distanskurs_HT14_T15/phpmvc/kmom06/mymodule</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../../../../../../../../../../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../../../../../../../../css/nv.d3.css" rel="stylesheet">
+  <link href="../../../../../../../../../../css/style.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="../../../../../../../../../../js/html5shiv.min.js"></script>
+  <script src="../../../../../../../../../../js/respond.min.js"></script>
+  <![endif]-->
+ </head>
+ <body>
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="../../../../../../../../../../index.html">C:</a></li>
+        <li><a href="../../../../../../../../../index.html">Users</a></li>
+        <li><a href="../../../../../../../../index.html">Tommy</a></li>
+        <li><a href="../../../../../../../index.html">Documents</a></li>
+        <li><a href="../../../../../../index.html">Webbutveckling</a></li>
+        <li><a href="../../../../../index.html">wamp</a></li>
+        <li><a href="../../../../index.html">www</a></li>
+        <li><a href="../../../index.html">Distanskurs_HT14_T15</a></li>
+        <li><a href="../../index.html">phpmvc</a></li>
+        <li><a href="../index.html">kmom06</a></li>
+        <li><a href="index.html">mymodule</a></li>
+        <li class="active">(Dashboard)</li>
+
+      </ol>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="mymodule/src/Upload/Upload.php.html#8">Upload</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#9">UploadController</a></td><td class="text-right">53%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#9">UploadController</a></td><td class="text-right">308</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="mymodule/src/Upload/Upload.php.html#18"><abbr title="Upload::__construct">__construct</a></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#200"><abbr title="UploadController::createImage">createImage</a></a></td><td class="text-right">30%</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#245"><abbr title="UploadController::outputImage">outputImage</a></a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#230"><abbr title="UploadController::transparencyAndResample">transparencyAndResample</a></a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#176"><abbr title="UploadController::imageSize">imageSize</a></a></td><td class="text-right">72%</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#191"><abbr title="UploadController::createImageSource">createImageSource</a></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#36"><abbr title="UploadController::movefile">movefile</a></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#45"><abbr title="UploadController::checkMimeType">checkMimeType</a></a></td><td class="text-right">88%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#200"><abbr title="UploadController::createImage">createImage</abbr></a></td><td class="text-right">23</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#245"><abbr title="UploadController::outputImage">outputImage</abbr></a></td><td class="text-right">21</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#230"><abbr title="UploadController::transparencyAndResample">transparencyAndResample</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#36"><abbr title="UploadController::movefile">movefile</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#176"><abbr title="UploadController::imageSize">imageSize</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#191"><abbr title="UploadController::createImageSource">createImageSource</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="mymodule/src/Upload/UploadController.php.html#45"><abbr title="UploadController::checkMimeType">checkMimeType</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 2.0.15</a> using <a href="http://php.net/" target="_top">PHP 5.5.12</a> and <a href="http://phpunit.de/">PHPUnit 4.5.0</a> at Sun Mar 1 12:07:11 CET 2015.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../../../../../../../../../../js/jquery.min.js" type="text/javascript"></script>
+  <script src="../../../../../../../../../../js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="../../../../../../../../../../js/holder.js" type="text/javascript"></script>
+  <script src="../../../../../../../../../../js/d3.min.js" type="text/javascript"></script>
+  <script src="../../../../../../../../../../js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([1,0,0,0,0,0,1,0,0,0,0,0], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([1,0,0,0,2,1,0,0,3,1,0,10], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.scatter.onlyCircles(false);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[0,3,"<a href=\"mymodule\/src\/Upload\/Upload.php.html#8\">Upload<\/a>"],[53.75,51,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#9\">UploadController<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.scatter.onlyCircles(false);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,1,"<a href=\"mymodule\/src\/Upload\/Upload.php.html#18\">Upload::__construct<\/a>"],[100,1,"<a href=\"mymodule\/src\/Upload\/Upload.php.html#29\">Upload::add<\/a>"],[100,1,"<a href=\"mymodule\/src\/Upload\/Upload.php.html#36\">Upload::findLast<\/a>"],[100,1,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#26\">UploadController::__construct<\/a>"],[75,3,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#36\">UploadController::movefile<\/a>"],[88.888888888889,2,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#45\">UploadController::checkMimeType<\/a>"],[100,1,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#70\">UploadController::initialize<\/a>"],[100,6,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#79\">UploadController::entryAction<\/a>"],[100,1,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#112\">UploadController::errorMessage<\/a>"],[100,12,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#120\">UploadController::checkUpload<\/a>"],[72.727272727273,2,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#176\">UploadController::imageSize<\/a>"],[75,2,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#191\">UploadController::createImageSource<\/a>"],[30,7,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#200\">UploadController::createImage<\/a>"],[44.444444444444,4,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#230\">UploadController::transparencyAndResample<\/a>"],[33.333333333333,7,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#245\">UploadController::outputImage<\/a>"],[100,1,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#272\">UploadController::sanitizeFilename<\/a>"],[100,1,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#282\">UploadController::saveToDatabase<\/a>"],[100,1,"<a href=\"mymodule\/src\/Upload\/UploadController.php.html#295\">UploadController::viewUpload<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

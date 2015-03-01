@@ -8,7 +8,7 @@
 require __DIR__.'/config_with_app.php'; 
 
 $di->set('UploadController', function() use ($di) {
-    $upload = new Anax\Mymodule\UploadController();
+    $upload = new Tommy001\Mymodule\UploadController();
     $upload->setDI($di);
     return $upload;
 });

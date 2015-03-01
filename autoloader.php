@@ -15,10 +15,10 @@ spl_autoload_register(function ($class) {
 
     // project-specific namespace prefix
     //$prefix = 'Foo\\Bar\\';
-    $prefix = 'Tommy001\\Mymodule\\';
+    $prefix = 'Tommy001\\Mymodule';
 
     // base directory for the namespace prefix
-    $base_dir = __DIR__ . '/src/';
+    $base_dir = __DIR__ . '/src/Upload/';
 
     // does the class use the namespace prefix?
     $len = strlen($prefix);
