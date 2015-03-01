@@ -82,19 +82,19 @@ class UploadController implements \Anax\DI\IInjectionAware {
         if($res === true){    
             $this->imageSize();
             $res = $this->createImageSource();
-            if(!$res){
+            if($res === false){
                 $this->errorMessage();
             }
             $res = $this->createImage();
-            if(!$res){
+            if($res === false){
                 $this->errorMessage();
             }
             $res = $this->transparencyAndResample();
-            if(!$res){
+            if($res === false){
                 $this->errorMessage();
             } 
             $res = $this->outputImage();
-            if(!$res){
+            if($res === false){
                 $this->errorMessage();
             }            
             $filename = $this->sanitizeFilename();
@@ -206,21 +206,18 @@ class UploadController implements \Anax\DI\IInjectionAware {
                     return false;
                 }
                 return true;
-                break;
             case 'jpg':
                 $this->srcimg = imagecreatefromjpeg($this->imgpath);
                 if(!$this->srcimg){
                     return false; 
                 }
                 return true;
-                break;
             case 'png':
                 $this->srcimg = imagecreatefrompng($this->imgpath);
                 if(!$this->srcimg){
                     return false;
                 }
                 return true;
-                break;
             default:
                 $this->srcimg = null;
                 return false;
@@ -251,21 +248,18 @@ class UploadController implements \Anax\DI\IInjectionAware {
                 return false;
             }     
             return true;
-             break;
         case 'jpg':
             $res = imagejpeg($this->destimg,$this->imgpath); 
             if(!$res){
                 return false;
             }
             return true;
-            break;
         case 'png':
             $res = imagepng($this->destimg,$this->imgpath);                
             if(!$res){
                 return false;
             } 
             return true;    
-            break;
         }
     }
     

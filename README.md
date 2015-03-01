@@ -1,4 +1,9 @@
 #mymodule
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Tommy001/mymodule/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Tommy001/mymodule/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/Tommy001/mymodule/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Tommy001/mymodule/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/Tommy001/mymodule/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Tommy001/mymodule/build-status/master)
+
 mymodule is a class for handling image uploads in the Anax-MVC framework (see https://github.com/mosbth/Anax-MVC)
 
 #License
@@ -7,7 +12,7 @@ This software is free software and carries a MIT license.
 
 #Description and test guide
 
-**mymodule** contains a php class that you can use to upload images within the Anax-MVC framework. Future versions will also allow downloads from secure folders on or above root level using a simple proxy script. In this first version there is no support for downloads and uploaded files are stored in the default folder Anax-MVC/webroot/img (where you will need to create a new writeable folder named "upload").
+**mymodule** contains the php class UploadController that you can use to process upload images within the Anax-MVC framework. Future versions will also allow downloads from secure folders on or above root level using a simple proxy script. In this first version there is no support for downloads and uploaded files are stored in the default folder Anax-MVC/webroot/img (where you will need to create a new writable folder named "upload").
 
 The uploaded file is passed through a try and catch method where it is checked for errors, invalid parameters, file size defined in the upload form (MAX_FILE_SIZE) and also defined in the script itself. The filename length is limited to 100 characters and only JPG, PNG and GIF images are allowed. If the file pass the "valid upload file" check performed by "move_uploaded_file()" it is stored on disk with a secure filename obtained by the php function *sha1_file()*.
 
@@ -25,26 +30,16 @@ After this download you may want to open your text editor (like JEdit or other) 
         "tommy001/mymodule": "dev-master"
     }
     
-Now use your command line interface and change the directory into Anax-MVC. Type "Composer validate" to check out that your composer.json file is valid. If it checks out, you then type "Composer install" on the command line.
+Now use your command line interface and change the directory into Anax-MVC. Type "Composer validate" to check that your composer.json file is valid. If it checks out, you then type "Composer install" on the command line.
 
 This will download the package **Mymodule** into a folder named "vendor" in Anax-MVC.
     
-In the folder Anax-MVC/vendor/Tommy001/mymodule/webroot there is a file named index.php. Copy that file to the folder Anax-MVC/webroot.
-Then copy the files from the folder Anax-MVC/vendor/Tommy001/mymodule/view to a new folder named Anax-MVC/app/view/**mymodule**.
-And finally copy the files from the folder Anax-MVC/vendor/Tommy001/mymodule/src to a new folder named Anax-MVC/app/src/**Mymodule**.
-As mentioned above you will also need to create a writeable folder named Anax-MVC/webroot/img/upload.
+In the folder mymodule/webroot there is a file named index.php. Copy that file to the folder Anax-MVC/webroot.
+Then copy the files from the folder mymodule/view to a new folder named Anax-MVC/app/view/**mymodule**.
+And finally copy the files from the folder mymodule/src to a new folder named Anax-MVC/app/src/**Mymodule**.
+As mentioned above you will also need to create a writable folder named Anax-MVC/webroot/img/upload.
 
-In order for simple testing of the upload class there is a rudimentary database connection in the Upload class constructor. You also need a MySQL database table to test the script. Create it with the SQL query below using e.g. phpMyAdmin. 
-
-> `DROP TABLE IF EXISTS test_upload;
-CREATE TABLE IF NOT EXISTS test_upload (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  san_filename varchar(100) NOT NULL,
-  path varchar(200) NOT NULL,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;`
-
-In the constructor of the class Upload you will also need to change the connection details to fit your MySQL database.
+In order for simple testing of the upload class there is a rudimentary Sqlite database provided in the mymodule/webroot folder. Move this file to the Anax-MVC webroot folder. 
 
 When you are done with this setup you can point your web browser to index.php, mentioned above and upload a valid image.
 
