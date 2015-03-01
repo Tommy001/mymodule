@@ -3,6 +3,7 @@ filter:
   excluded_paths: 
     - test/*
     - vendor/*
+    - report/*
 imports: 
   - php
 tools: 
