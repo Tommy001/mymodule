@@ -3,6 +3,7 @@ after_script:
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 before_script: 
   - wget https://scrutinizer-ci.com/ocular.phar
+   - composer install
 language: php
 php: 
   - 5.5
