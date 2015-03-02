@@ -12,7 +12,7 @@ This software is free software and carries a MIT license.
 
 #Description and test guide
 
-**mymodule** contains the php class UploadController that you can use to process upload images within the Anax-MVC framework. Future versions will also allow downloads from secure folders on or above root level using a simple proxy script. In this first version there is no support for downloads and uploaded files are stored in the default folder Anax-MVC/webroot/img (where you will need to create a new writable folder named "upload").
+**mymodule** contains the php class UploadController that you can use to process uploaded images within the Anax-MVC framework. Future versions will also allow downloads from secure folders on or above root level using a simple proxy script. In this first version there is no support for downloads and uploaded files are stored in the default folder Anax-MVC/webroot/img (where you will need to create a new writable folder named "upload").
 
 The uploaded file is passed through a try and catch method where it is checked for errors, invalid parameters, file size defined in the upload form (MAX_FILE_SIZE) and also defined in the script itself. The filename length is limited to 100 characters and only JPG, PNG and GIF images are allowed. If the file pass the "valid upload file" check performed by "move_uploaded_file()" it is stored on disk with a secure filename obtained by the php function *sha1_file()*.
 

@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <phpunit>
-    <filter>
-  <blacklist>
-    <directory suffix=".php">../vendor</directory>
-    <exclude>
-      <directory suffix=".php">../vendor</directory>
-    </exclude>
-  </blacklist>
-    </filter>
-      <filter>
+  <filter>
     <whitelist addUncoveredFilesFromWhitelist="true">
       <directory suffix=".php">../src</directory>
     </whitelist>
